@@ -1,0 +1,4 @@
+micronaut:
+  application:
+    name: micronautKafkaThreading
+kafka.bootstrap.servers: localhost:9092
