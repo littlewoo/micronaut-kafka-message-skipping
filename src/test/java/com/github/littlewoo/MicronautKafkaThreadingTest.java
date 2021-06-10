@@ -1,12 +1,11 @@
 package com.github.littlewoo;
 
 import com.github.littlewoo.kafka.MyProducer;
-import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
-
 import javax.inject.Inject;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @MicronautTest
 class MicronautKafkaThreadingTest {
@@ -14,11 +13,16 @@ class MicronautKafkaThreadingTest {
     @Inject
     MyProducer producer;
 
+    private final static Logger log = LoggerFactory.getLogger(MicronautKafkaThreadingTest.class);
+
     @Test
-    void test() {
-        int i=0;
-        while (true) {
-            producer.produce("Hello world! (" + i + ")").blockingGet();
+    void test() throws InterruptedException {
+        int i = 0;
+        while (i < 50) {
+            log.info("producing message {}", i);
+            producer.produce("Hello world! (" + i++ + ")").blockingGet();
         }
+        // Give the application some slack
+        Thread.sleep(1000);
     }
 }
