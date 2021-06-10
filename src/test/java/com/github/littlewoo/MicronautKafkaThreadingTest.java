@@ -19,7 +19,6 @@ class MicronautKafkaThreadingTest {
     void test() throws InterruptedException {
         int i = 0;
         while (i < 50) {
-            log.info("producing message {}", i);
             producer.produce("Hello world! (" + i++ + ")").blockingGet();
         }
         // Give the application some slack

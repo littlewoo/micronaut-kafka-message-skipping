@@ -1,6 +1,8 @@
 package com.github.littlewoo.kafka;
 
 import io.micronaut.configuration.kafka.annotation.KafkaListener;
+import io.micronaut.configuration.kafka.annotation.OffsetReset;
+import io.micronaut.configuration.kafka.annotation.OffsetStrategy;
 import io.micronaut.configuration.kafka.annotation.Topic;
 import io.micronaut.context.event.ShutdownEvent;
 import io.micronaut.messaging.annotation.MessageBody;
@@ -9,7 +11,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@KafkaListener(groupId = "MyConsumer")
+@KafkaListener(
+    groupId = "MyConsumer",
+    offsetReset = OffsetReset.EARLIEST,
+    offsetStrategy = OffsetStrategy.SYNC_PER_RECORD
+)
 public class MyConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(MyConsumer.class);
