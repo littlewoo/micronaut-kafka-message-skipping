@@ -20,6 +20,10 @@ public class MyConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(MyConsumer.class);
 
+    public ConcurrentHashMap<Long, String> getMessages() {
+        return messages;
+    }
+
     private final ConcurrentHashMap<Long, String> messages = new ConcurrentHashMap<>();
 
     @Topic("my-topic")
@@ -36,5 +40,4 @@ public class MyConsumer {
         log.info(messages.toString());
         log.info("###############################");
     }
-
 }
